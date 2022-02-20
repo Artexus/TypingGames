@@ -45,7 +45,7 @@ function GamePage(){
                 setTimeLeft(timeLeft - 1)
             }, 1000)
         }
-    },[isFirst, timeLeft])
+    },[isFirst, timeLeft, overlay])
 
     const handleInput = (e)=>{
         if(isFirst){
