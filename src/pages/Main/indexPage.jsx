@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import  ReactDOM from 'react-dom';
 import './index.css'
 function GamePage(){
-    const [timeLeft, setTimeLeft] = useState(100)
+    const [timeLeft, setTimeLeft] = useState(60)
     const [point, setPoint] = useState(0)
     const [isFirst, setIsFirst] = useState(true)
+    const [triggerEnd, setTriggerEnd] = useState(false)
 
     const word = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
     
@@ -16,6 +17,8 @@ function GamePage(){
         return words
     }
     const alphabet = splitWords(word)
+
+    const inputArea = <textarea id="input-text" onInput={e => handleInput(e)}></textarea>
 
     const overlay = 
         <div className="overlay d-flex justify-content-center">
@@ -32,14 +35,9 @@ function GamePage(){
             </div>
         </div>
 
-
     useEffect(()=>{
-        const createOverlay = ()=>{
-            document.getElementById("input-text").disabled = true
-            ReactDOM.render(overlay, document.getElementById("ov"))
-        }
         if(timeLeft === 0){
-            createOverlay()
+            setTriggerEnd(true)
             return
         }
         if(!isFirst){
@@ -47,7 +45,12 @@ function GamePage(){
                 setTimeLeft(timeLeft - 1)
             }, 1000)
         }
-    },[isFirst, timeLeft,overlay])
+    },[isFirst, timeLeft])
+    
+    if(triggerEnd){
+        document.getElementById("input-text").disabled = true
+        ReactDOM.render(overlay, document.getElementById("ov"))
+    }
 
     const handleInput = (e)=>{
         if(isFirst){
@@ -89,7 +92,7 @@ function GamePage(){
             </div>
 
             <div className="container">
-                <textarea id="input-text" onInput={e => handleInput(e)}></textarea>
+                {inputArea}
             </div>
             
             <div className="container bottom-container d-flex">
