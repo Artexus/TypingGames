@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import GamePage from './pages/Main/indexPage';
 import HomePage from './pages/Home/homePage'
