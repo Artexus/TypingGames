@@ -34,10 +34,12 @@ function GamePage(){
 
 
     useEffect(()=>{
-        if(timeLeft == 0){
+        const createOverlay = ()=>{
             document.getElementById("input-text").disabled = true
-            
             ReactDOM.render(overlay, document.getElementById("ov"))
+        }
+        if(timeLeft === 0){
+            createOverlay()
             return
         }
         if(!isFirst){
@@ -45,7 +47,7 @@ function GamePage(){
                 setTimeLeft(timeLeft - 1)
             }, 1000)
         }
-    },[isFirst, timeLeft, overlay])
+    },[isFirst, timeLeft])
 
     const handleInput = (e)=>{
         if(isFirst){
@@ -60,7 +62,7 @@ function GamePage(){
         for(let i = 0 ; i < input.length; i ++){
             let span = document.getElementById(i.toString())
             span.className = ""
-            if (input[i] == alphabet[i]){
+            if (input[i] === alphabet[i]){
                 span.className += 'green'
                 count += 1
             }else{
@@ -79,7 +81,7 @@ function GamePage(){
                     {alphabet.map((alpha, index)=>{
                         return (
                             <span key={index} id={index}>
-                                {alpha == " " ? '\u00A0' : alpha} 
+                                {alpha === " " ? '\u00A0' : alpha} 
                             </span>
                         )
                     })}
